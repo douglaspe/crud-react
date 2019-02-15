@@ -19,7 +19,7 @@
 /* Layout em Grid */
 
 .app {
-    margin: opx;
+    margin: 0px;
     display: grid;
     grid-template-columns: var(--aside-width) 1fr;
     grid-template-rows: 
