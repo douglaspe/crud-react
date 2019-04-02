@@ -1,16 +1,17 @@
-import './Nav.css'
+import './Nav.scss'
 import React from 'react'
 import { Link } from 'react-router-dom'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 export default props => 
     <aside className="menu-area">
         <nav className="menu">
             <Link to="/">
-            {/* Refatorar! */}
-                <i className="fa fa-home"></i> Início
+                {/* Refatorar! */}
+                <FontAwesomeIcon icon="home" /> Início
             </Link>
             <Link to="/users">
-                <i className="fa fa-users"></i> Usuários
+                <FontAwesomeIcon icon="users" /> Usuários
             </Link>
         </nav>
     </aside>

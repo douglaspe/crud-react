@@ -1,4 +1,4 @@
-import './Main.css'
+import './Main.scss'
 import React, { Fragment } from 'react'
 import Header from './Header'
 
