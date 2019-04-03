@@ -1,7 +1,7 @@
 import '../../node_modules/bootstrap/dist/css/bootstrap.min.css'
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { faHome, faUsers, faPen, faTrash, faHeart } from '@fortawesome/free-solid-svg-icons';
-import './App.css';
+import './App.scss';
 import React from 'react';
 import { BrowserRouter } from 'react-router-dom';
 
