@@ -1,13 +1,35 @@
 import React, { Component } from 'react';
 import classnames from 'classnames';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { createUser, updateUser } from '../../actions';
 
 class NewUser extends Component {
 
     state = {
+        id: null,
         name: '',
         email: '',
         errors: {},
-        loading: false
+        loading: false,
+        done: false
+    }
+
+    componentWillUpdate = (nextProps) => {
+        if (!this.props.user && nextProps.user) {
+            this.setState({
+                id: nextProps.user.id,
+                name: nextProps.user.name,
+                email: nextProps.user.email
+            });
+        }
+        if (this.props.cliente && !nextProps.user) {
+            this.setState({
+                id: null,
+                name: '',
+                email: ''
+            });
+        }
     }
     
     handleInputChange = e => {
@@ -34,23 +56,36 @@ class NewUser extends Component {
         const isValid = Object.keys(errors).length === 0
     
         if (isValid) {
-            if (this.state.name.trim() === this.state.email.trim()) {
-                this.props.onAddUser(this.state);
-                this.handleReset();
-            }  
+            const { id, name, email } = this.state;
+            const { createUser, updateUser } = this.props;
+            this.setState({ loading: true });
+            
+            if (id) updateUser(id,{ name, email })
+            else createUser({ name, email })
+            
+            this.handleReset();
         }
+    };
+
+    handleUpdate = e => {
+        e.preventDefault();
+
+        
     };
     
     handleReset = () => {
-        this.setState({ name: '', email: '' })
+        this.setState({
+            name: '',
+            email: ''
+        });
     };
 
     render() {
         return (
-                <div className="form" >
+            <form className="form" onSubmit={this.handleSubmit}>
                 <div className="row">
                     <div className="col-12 col-md-6">
-                        <div className={classnames('form-group', { error: !!this.state.errors.name})}>
+                        <div className={classnames('form-group', { error: !!this.state.errors.name })}>
                             <label>Nome</label>
                             <input type="text" className="form-control"
                                 name="name"
@@ -62,7 +97,7 @@ class NewUser extends Component {
                     </div>
 
                     <div className="col-12 col-md-6">
-                        <div className={classnames('form-group', { error: !!this.state.errors.email})}>
+                        <div className={classnames('form-group', { error: !!this.state.errors.email })}>
                             <label>E-mail</label>
                             <input type="text" className="form-control"
                                 name="email"
@@ -74,10 +109,7 @@ class NewUser extends Component {
 
                         <div className="row">
                             <div className="col-12 d-flex justify-content-end">
-                                <button className="btn btn-primary"
-                                    onClick={this.handleSubmit}>Salvar</button>
-                                <button className="btn btn-primary"
-                                onClick={ this.handleUpdate }>Atualizar</button>
+                                <button className="btn btn-primary mr-md-2">Salvar</button>
                                 <button className="btn btn-secondary"
                                     onClick={e => this.handleReset(e)}>
                                     Cancelar
@@ -86,9 +118,19 @@ class NewUser extends Component {
                         </div>
                     </div>
                 </div>
-            </div>
-        )
+            </form>
+        );
     }
 }
 
-export default NewUser;
+const mapStateToProps = state => ({
+      user: state.users.user
+});
+
+const mapDispatchToProps = dispatch =>
+  bindActionCreators({ createUser, updateUser }, dispatch)
+
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(NewUser);

@@ -1,4 +1,4 @@
-import { ADD_USER, LOAD_USER, FETCH_USER} from './types';
+import { ADD_USER, LOAD_USER, GET_USERS } from './types';
 import axios from 'axios';
 
 const apiUrl = 'http://localhost:3001/users';
@@ -15,7 +15,7 @@ export const createUser = ({ name, email }) => {
   };
 };
 
-export const createUserSuccess =  (data) => {
+export const createUserSuccess = (data) => {
   return {
     type: ADD_USER,
     payload: {
@@ -26,13 +26,15 @@ export const createUserSuccess =  (data) => {
   }
 };
 
-export const loadUser = user => ({ type: LOAD_USER, user })
+export const loadUser = user => ({
+  type: LOAD_USER, user
+})
 
-export const updateUser = id => {
+export const updateUser = (id, {name, email}) => {
   return (dispatch) => {
-    return axios.put(`${apiUrl}/${id}`)
+    return axios.put(`${apiUrl}/${id}`, {name, email})
       .then(response => {
-        dispatch(fetchAllUsers())
+        dispatch(getAllUsers())
       })
       .catch(error => {
         throw(error);
@@ -44,7 +46,7 @@ export const deleteUser = id => {
     return (dispatch) => {
       return axios.delete(`${apiUrl}/${id}`)
         .then(response => {
-          dispatch(fetchAllUsers())
+          dispatch(getAllUsers())
         })
         .catch(error => {
           throw(error);
@@ -52,21 +54,21 @@ export const deleteUser = id => {
     };
   };
   
-  export const fetchUsers = (users) => {
+  export const getUsers = (users) => {
     return {
-      type: FETCH_USER,
+      type: GET_USERS,
       users
     }
 };
   
-export const fetchAllUsers = () => {
+export const getAllUsers = () => {
     return (dispatch) => {
       return axios.get(apiUrl)
         .then(response => {
-          dispatch(fetchUsers(response.data))
+          dispatch(getUsers(response.data))
         })
         .catch(error => {
           throw(error);
         });
     };
-  };
+};

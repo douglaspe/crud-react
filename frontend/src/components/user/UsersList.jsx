@@ -1,17 +1,15 @@
-import React, { Component } from 'react'
-import { bindActionCreators } from 'redux'
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import User from './User'
-import { fetchAllUsers, deleteUser, loadUser } from '../../actions';
+import User from './User';
+import { getAllUsers } from '../../actions';
 
 class UsersList extends Component {
     componentDidMount() {
-        const { fetchAllUsers } = this.props;
-        fetchAllUsers();
-      }
+        this.props.getAllUsers();
+    }
 
     render() {
-        const { users, deleteUser } = this.props;
+        const { users } = this.props;
         return (
                 <table className="table mt-4">
                 <thead>
@@ -23,11 +21,11 @@ class UsersList extends Component {
                     </tr>
                 </thead>
                 <tbody>
-                        {users.map(user => {
-                            return (
-                                <User user={user} onDelete={deleteUser} onLoadUser={loadUser} key={user.id} />
-                            )
-                        })}
+                    {
+                        Array.from(users).map(user => (
+                                <User user={user} key={user.id} />
+                        ))
+                    }
                 </tbody>
             </table>
         )
@@ -40,10 +38,7 @@ const mapStateToProps = state => {
   };
 };
   
-const mapDispatchToProps = dispatch =>
-  bindActionCreators({ fetchAllUsers, deleteUser, loadUser }, dispatch)
-  
 export default connect(
     mapStateToProps,
-    mapDispatchToProps
+    { getAllUsers }
 )(UsersList);

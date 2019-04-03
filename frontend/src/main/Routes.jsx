@@ -1,12 +1,12 @@
-import React from 'react'
-import { Switch, Route, Redirect } from 'react-router'
+import React from 'react';
+import { Switch, Route } from 'react-router-dom';
 
-import Home from '../components/home/Home'
-import Users from "../components/user/Users";
+import Home from '../components/home/Home';
+import UserPage from "../components/user/UserPage";
 
-export default props =>
+export default () =>
     <Switch>
         <Route exact path='/' component={Home} />
-        <Route path='/users' component={Users} />
-        <Redirect from='*' to='/' />
+        <Route path='/users' component={UserPage} />
+        <Route path='/users/:id' component={UserPage} />
     </Switch>
