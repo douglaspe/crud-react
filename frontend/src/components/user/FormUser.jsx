@@ -10,9 +10,7 @@ class NewUser extends Component {
         id: null,
         name: '',
         email: '',
-        errors: {},
-        loading: false,
-        done: false
+        errors: {}
     }
 
     componentWillUpdate = (nextProps) => {
@@ -53,24 +51,17 @@ class NewUser extends Component {
         if (this.state.name === '') errors.name = "Deve ser preenchido";
         if (this.state.email === '') errors.email = "Deve ser preenchido";
         this.setState({ errors });
-        const isValid = Object.keys(errors).length === 0
+        const isValid = Object.keys(errors).length === 0;
     
         if (isValid) {
             const { id, name, email } = this.state;
             const { createUser, updateUser } = this.props;
-            this.setState({ loading: true });
             
-            if (id) updateUser(id,{ name, email })
+            if (id) updateUser(id, { name, email })
             else createUser({ name, email })
             
             this.handleReset();
         }
-    };
-
-    handleUpdate = e => {
-        e.preventDefault();
-
-        
     };
     
     handleReset = () => {
@@ -128,7 +119,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch =>
-  bindActionCreators({ createUser, updateUser }, dispatch)
+    bindActionCreators({ createUser, updateUser }, dispatch);
 
 export default connect(
     mapStateToProps,

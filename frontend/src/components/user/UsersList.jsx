@@ -11,7 +11,7 @@ class UsersList extends Component {
     render() {
         const { users } = this.props;
         return (
-                <table className="table mt-4">
+            <table className="table mt-4">
                 <thead>
                     <tr>
                         <th>ID</th>
@@ -21,11 +21,9 @@ class UsersList extends Component {
                     </tr>
                 </thead>
                 <tbody>
-                    {
-                        Array.from(users).map(user => (
-                                <User user={user} key={user.id} />
-                        ))
-                    }
+                    {Array.from(users).map(user => (
+                            <User user={user} key={user.id} />
+                    ))}
                 </tbody>
             </table>
         )

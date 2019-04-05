@@ -28,19 +28,19 @@ export const createUserSuccess = (data) => {
 
 export const loadUser = user => ({
   type: LOAD_USER, user
-})
+});
 
-export const updateUser = (id, {name, email}) => {
+export const updateUser = (id, { name, email }) => {
   return (dispatch) => {
-    return axios.put(`${apiUrl}/${id}`, {name, email})
+    return axios.put(`${apiUrl}/${id}`, { name, email })
       .then(response => {
         dispatch(getAllUsers())
       })
       .catch(error => {
-        throw(error);
+        throw (error);
       });
   };
-}
+};
 
 export const deleteUser = id => {
     return (dispatch) => {
@@ -54,11 +54,11 @@ export const deleteUser = id => {
     };
   };
   
-  export const getUsers = (users) => {
-    return {
-      type: GET_USERS,
-      users
-    }
+export const getUsers = (users) => {
+  return {
+    type: GET_USERS,
+    users
+  };
 };
   
 export const getAllUsers = () => {

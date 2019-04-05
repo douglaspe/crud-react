@@ -5,7 +5,7 @@ const userReducer = (state = [], action) => {
     case ADD_USER:
       return [...state, action.payload];
     case LOAD_USER:
-      return {...state, user: action.user }
+      return { ...state, user: action.user };
     case GET_USERS:
       return action.users;
     default:
